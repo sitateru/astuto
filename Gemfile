@@ -23,6 +23,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 # Authentication
 gem 'devise', git: 'https://github.com/plataformatec/devise', tag: 'v4.7.0'
+gem 'devise-i18n'
 
 # Administration panel
 gem "administrate", git: "https://github.com/thoughtbot/administrate.git", tag: 'v0.12.0'
