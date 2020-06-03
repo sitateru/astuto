@@ -97,6 +97,9 @@
         
         line-height: 1em;
       }
+      h2 {
+        flex-grow: 1;
+      }
     }
 
     .postSettings {
@@ -116,6 +119,15 @@
         .my-3;
 
       color: $astuto-black;
+    }
+
+    .postImage {
+      @extend
+        .my-3;
+      img {
+        max-width: 100px;
+        object-fit: contain;
+      }
     }
   }
 }

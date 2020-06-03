@@ -28,6 +28,7 @@
 
     .newPostForm {
       @extend .my-2;
+      width: 100%;
     }
   }
 
@@ -86,7 +87,7 @@
       .mb-3,
       .p-3;
 
-    height: 140px;
+    height: auto;
     color: $astuto-black;
 
     @include media-breakpoint-down(sm) {
@@ -100,6 +101,7 @@
         .d-flex,
         .flex-column,
         .justify-content-between;
+      flex-grow: 1;
     }
   }
 
@@ -116,6 +118,16 @@
 
     .badge {
       @extend .mr-2;
+    }
+  }
+
+  .postImage {
+    @extend
+      .my-3;
+    img {
+      height: 160px;
+      max-width: 100px;
+      object-fit: contain;
     }
   }
 }
