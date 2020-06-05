@@ -5,9 +5,23 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
 
+  # has_many_attached :images
+  has_one_attached :image
+  attribute :url
+
   validates :title, presence: true, length: { in: 4..64 }
 
   paginates_per Rails.application.posts_per_page
+
+  def url
+    Post.fetch_url(image.blob) if image.attachment.present?
+  end
+
+  def self.fetch_url(blob)
+    Rails.cache.fetch(blob.key, expires_in: 1.week.seconds.to_i) do
+      blob.service_url
+    end
+  end
 
   class << self
     def find_with_post_status_in(post_statuses)

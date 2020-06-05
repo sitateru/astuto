@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 
 import LikeButton from '../../containers/LikeButton';
 import CommentsNumber from '../shared/CommentsNumber';
@@ -11,6 +13,7 @@ interface Props {
   id: number;
   title: string;
   description?: string;
+  url?: string;
   postStatus: IPostStatus;
   likesCount: number;
   liked: number;
@@ -20,37 +23,62 @@ interface Props {
   authenticityToken: string;
 }
 
-const PostListItem = ({
-  id,
-  title,
-  description,
-  postStatus,
-  likesCount,
-  liked,
-  commentsCount,
+interface State {
+  isOpen: boolean;
+}
 
-  isLoggedIn,
-  authenticityToken,
-}: Props) => (
-  <div onClick={() => window.location.href = `/posts/${id}`} className="postListItem">
-    <LikeButton
-      postId={id}
-      likesCount={likesCount}
-      liked={liked}
-      isLoggedIn={isLoggedIn}
-      authenticityToken={authenticityToken}
-    />
+class PostListItem extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
 
-    <div className="postContainer">
-      <span className="postTitle">{title}</span>
-      <DescriptionText limit={120}>{description}</DescriptionText>
+    this.state = {
+      isOpen: false,
+    };
+  }
+  render() {
+    return (
+      <div className="postListItem">
+        <LikeButton
+          postId={this.props.id}
+          likesCount={this.props.likesCount}
+          liked={this.props.liked}
+          isLoggedIn={this.props.isLoggedIn}
+          authenticityToken={this.props.authenticityToken}
+        />
 
-      <div className="postDetails">
-        <CommentsNumber number={commentsCount} />
-        { postStatus ? <PostStatusLabel {...postStatus} /> : null }
+        <div onClick={() => window.location.href = `/posts/${this.props.id}`} className="postContainer">
+          <div>
+            <span className="postTitle">{this.props.title}</span>
+          </div>
+          <DescriptionText limit={120}>{this.props.description}</DescriptionText>
+
+          <div className="postDetails">
+            <CommentsNumber number={this.props.commentsCount} />
+            { this.props.postStatus ? <PostStatusLabel {...this.props.postStatus} /> : null }
+          </div>
+        </div>
+        <div className="postImage">
+        {
+          this.props.url && (
+            <div>
+              <img
+                onClick={(e) => this.setState({ isOpen: true })}
+                alt={this.props.title}
+                src={this.props.url}
+              />
+            </div>
+          )}
+          {
+          this.state.isOpen && (
+            <Lightbox
+              mainSrc={this.props.url}
+              onCloseRequest={() => this.setState({ isOpen: false })}
+            />
+          )}
+        </div>
       </div>
-    </div>
-  </div>
-);
+    );
+  }
+};
 
 export default PostListItem;

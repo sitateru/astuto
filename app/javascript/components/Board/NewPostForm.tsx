@@ -1,4 +1,6 @@
 import * as React from 'react';
+// import ActiveStorageProvider from 'react-activestorage-provider'
+import { DirectUploadProvider } from 'react-activestorage-provider'
 
 import Button from '../shared/Button';
 
@@ -10,6 +12,7 @@ interface Props {
   handleTitleChange(title: string): void;
   handleDescriptionChange(description: string): void;
   handleSubmit(e: object): void;
+  handleAttachment(siginedId: string): void;
 }
 
 const NewPostForm = ({
@@ -18,6 +21,7 @@ const NewPostForm = ({
   handleTitleChange,
   handleDescriptionChange,
   handleSubmit,
+  handleAttachment,
   }: Props) => (
   <div className="newPostForm">
     <form>
@@ -44,6 +48,46 @@ const NewPostForm = ({
           className="form-control"
           id="postDescription"
         ></textarea>
+      </div>
+      <div className="form-group">
+      <DirectUploadProvider 
+        multiple 
+        onSuccess={ handleAttachment } 
+        render={({ handleUpload, uploads, ready }) => (
+          <div>
+            <input
+              type="file"
+              disabled={!ready}
+              onChange={e => {
+                handleUpload(e.currentTarget.files)
+              }
+            }
+            />
+            {uploads.map(upload => {
+              switch (upload.state) {
+                case 'waiting':
+                  return <p key={upload.id}>Waiting to upload {upload.file.name}</p>
+                case 'uploading':
+                  return (
+                    <p key={upload.id}>
+                      Uploading {upload.file.name}: {upload.progress}%
+                    </p>
+                  )
+                case 'error':
+                  return (
+                    <p key={upload.id}>
+                      Error uploading {upload.file.name}: {upload.error}
+                    </p>
+                  )
+                case 'finished':
+                  return (
+                    <p key={upload.id}>Finished uploading {upload.file.name}</p>
+                  )
+              }
+            })}
+          </div>
+        )}
+      />
       </div>
       <Button onClick={e => handleSubmit(e)} className="submitBtn d-block mx-auto">
         {I18n.t('javascript.components.board.new_post_form.submit_feedback')}

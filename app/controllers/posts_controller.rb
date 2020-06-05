@@ -21,7 +21,7 @@ class PostsController < ApplicationController
       .order('hotness DESC')
       # .page(params[:page].to_i)
     
-    render json: posts
+    render json: posts.with_attached_image
   end
 
   def create
@@ -83,7 +83,7 @@ class PostsController < ApplicationController
     def post_params
       params
         .require(:post)
-        .permit(:title, :description, :board_id)
+        .permit(:title, :description, :board_id, :image)
         .merge(user_id: current_user.id)
     end
 end

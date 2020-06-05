@@ -39,7 +39,7 @@ export const DescriptionText = ({ children, limit = 90}: DescriptionTextProps) =
       children && children.length > limit ?
         children.slice(0, limit-1) + '...'
       :
-        children || '<No description provided>'
+        children || ''
     }
   </span>
 );
