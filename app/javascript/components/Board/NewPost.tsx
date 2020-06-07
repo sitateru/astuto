@@ -28,7 +28,7 @@ interface State {
 
   title: string;
   description: string;
-  image: string;
+  images: string[];
 }
 
 class NewPost extends React.Component<Props, State> {
@@ -43,7 +43,7 @@ class NewPost extends React.Component<Props, State> {
 
       title: '',
       description: '',
-      image: undefined,
+      images: undefined,
     };
 
     this.toggleForm = this.toggleForm.bind(this);
@@ -77,7 +77,7 @@ class NewPost extends React.Component<Props, State> {
 
   handleAttachment(signedIds) {
     console.log('handleAttachment', signedIds)
-    this.setState({ image: signedIds[0] })
+    this.setState({ images: [signedIds[0]]})
     // const body = JSON.stringify({ post: { title: ..., image: signedIds }})
     // fetch('/posts.json', { method: 'POST', body })
   };
@@ -93,7 +93,7 @@ class NewPost extends React.Component<Props, State> {
 
     const boardId = this.props.board.id;
     const { authenticityToken } = this.props;
-    const { title, description, image } = this.state;
+    const { title, description, images } = this.state;
 
     if (title === '') {
       this.setState({
@@ -115,7 +115,7 @@ class NewPost extends React.Component<Props, State> {
           post: {
             title,
             description,
-            image,
+            images,
             board_id: boardId,
           },
         }),

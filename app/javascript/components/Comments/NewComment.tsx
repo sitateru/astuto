@@ -5,6 +5,8 @@ import Button from '../shared/Button';
 import Spinner from '../shared/Spinner';
 import { DangerText } from '../shared/CustomTexts';
 
+import I18n from 'i18n-js';
+
 interface Props {
   body: string;
   parentId: number;
@@ -37,17 +39,17 @@ const NewComment = ({
             <textarea
               value={body}
               onChange={handleChange}
-              placeholder="Leave a comment"
+              placeholder={I18n.t('javascript.components.comments.new_comment.leave_comment')}
               className="newCommentBody"
             />
             <Button
               onClick={() => handleSubmit(body, parentId)}
               className="submitCommentButton">
-              { isSubmitting ? <Spinner /> : 'Submit' }
+              { isSubmitting ? <Spinner /> : I18n.t('javascript.components.comments.new_comment.submit') }
             </Button>
           </React.Fragment>
         :
-          <a href="/users/sign_in" className="loginInfo">You need to log in to post comments.</a>
+          <a href="/users/sign_in" className="loginInfo">{I18n.t('javascript.components.comments.new_comment.you_need_to_login')}</a>
       }
     </div>
     { error ? <DangerText>{error}</DangerText> : null }

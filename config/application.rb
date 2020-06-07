@@ -23,7 +23,7 @@ module App
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 
     def name
-      ENV["APP_NAME"] || 'ASTUTO'
+      ENV["APP_NAME"] || 'Feedbacks'
     end
 
     def email_confirmation?

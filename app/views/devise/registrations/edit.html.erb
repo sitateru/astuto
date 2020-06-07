@@ -1,22 +1,28 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <h2>Profile settings</h2>
+  <h2><%= I18n.t('views.devise.registrations.edit.profile_settings') %></h2>
 
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="form-group">
     <%= f.label :full_name %>
-    <%= f.text_field :full_name, autocomplete: "full-name", class: "form-control" %>
+    <%= f.text_field :full_name, autocomplete: "full-name", class: "form-control", readonly: true %>
   </div>
 
   <div class="form-group">
     <%= f.label :email %>
-    <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
-    <small id="emailGravatarHelp" class="form-text text-muted">
+    <%= f.email_field :email, autocomplete: "email", class: "form-control", readonly: true %>
+    <%
+=begin%>
+ <small id="emailGravatarHelp" class="form-text text-muted">
       the email is <a href="https://gravatar.com" target="_blank">gravatar</a>ized
-    </small>
+    </small> 
+<%
+=end%>
   </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+  <%
+=begin%>
+ <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
@@ -36,7 +42,7 @@
   <div class="form-group">
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-  </div>
+  </div> 
 
   <div class="form-group">
     <%= f.label :current_password %>
@@ -45,17 +51,28 @@
       we need your current password to confirm your changes
     </small>
   </div>
+<%
+=end%>
 
-  <div class="actions">
-    <%= f.submit "Update profile", class: "btn btn-dark btn-block" %>
-  </div>
+  <%
+=begin%>
+ <div class="actions">
+    <%= f.submit I18n.t('views.devise.registrations.edit.update_profile'), class: "btn btn-dark btn-block" %>
+  </div> 
+<%
+=end%>
+
 <% end %>
 
-<br />
+<%
+=begin%>
+ <br />
 
 <div class="edit_user">
   <h3>Cancel my account</h3>
   <p>Unhappy?
     <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger btn-block" %>
   </p>
-</div>
+</div> 
+<%
+=end%>

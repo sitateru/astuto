@@ -56,7 +56,7 @@ const PostList = ({
               id={post.id}
               title={post.title}
               description={post.description}
-              url={post.url}
+              urls={post.urls}
               postStatus={postStatuses.find(postStatus => postStatus.id === post.postStatusId)}
               likesCount={post.likesCount}
               liked={post.liked}

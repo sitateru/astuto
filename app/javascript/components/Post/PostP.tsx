@@ -133,13 +133,12 @@ class PostP extends React.Component<Props> {
             </div>
             <div className='postImage'>
             {
-              post.url ?
-                
+              post.urls ?
                   <div>
                     <img
                       onClick={(e) => e.preventDefault()}
                       alt={post.title}
-                      src={post.url}
+                      src={post.urls[0]}
                       width='200'
                     />
                   </div>

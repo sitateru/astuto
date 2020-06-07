@@ -8,6 +8,8 @@ import { DangerText } from '../shared/CustomTexts';
 import IComment from '../../interfaces/IComment';
 import { ReplyFormState } from '../../reducers/replyFormReducer';
 
+import I18n from 'i18n-js';
+
 interface Props {
   postId: number;
   isLoggedIn: boolean;
@@ -99,8 +101,9 @@ class CommentsP extends React.Component<Props> {
         { error ? <DangerText>{error}</DangerText> : null }
 
         <div className="commentsTitle">
-          activity &bull; {comments.length} comments
+        {I18n.t('javascript.components.comments.comments_p.activity')} &bull; {comments.length} {I18n.t('javascript.components.comments.comments_p.comments')}
         </div>
+        
 
         <CommentList
           comments={comments}

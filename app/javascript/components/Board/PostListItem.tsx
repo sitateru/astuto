@@ -13,7 +13,7 @@ interface Props {
   id: number;
   title: string;
   description?: string;
-  url?: string;
+  urls?: string;
   postStatus: IPostStatus;
   likesCount: number;
   liked: number;
@@ -59,19 +59,19 @@ class PostListItem extends React.Component<Props, State> {
         </div>
         <div className="postImage">
         {
-          this.props.url && (
+          this.props.urls && (
             <div>
               <img
                 onClick={(e) => this.setState({ isOpen: true })}
                 alt={this.props.title}
-                src={this.props.url}
+                src={this.props.urls}
               />
             </div>
           )}
           {
           this.state.isOpen && (
             <Lightbox
-              mainSrc={this.props.url}
+              mainSrc={this.props.urls}
               onCloseRequest={() => this.setState({ isOpen: false })}
             />
           )}

@@ -5,22 +5,23 @@ class Post < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  # has_many_attached :images
-  has_one_attached :image
-  attribute :url
+  has_many_attached :images
+  attribute :urls
 
   validates :title, presence: true, length: { in: 4..64 }
 
   paginates_per Rails.application.posts_per_page
 
-  def url
-    Post.fetch_url(image.blob) if image.attachment.present?
+  def urls
+    Post.fetch_urls(images)
   end
 
-  def self.fetch_url(blob)
-    Rails.cache.fetch(blob.key, expires_in: 1.week.seconds.to_i) do
-      blob.service_url
-    end
+  def self.fetch_urls(images)
+    images.map do |image|    
+      Rails.cache.fetch(image.blob.key, expires_in: 1.week.seconds.to_i) do
+        image.blob.service_url
+      end
+    end.reject(&:blank?)
   end
 
   class << self
