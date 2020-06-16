@@ -3,10 +3,12 @@ services:
   db:
     image: postgres
     environment:
-      - DATABASE_USER
-      - DATABASE_PASSWORD
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - ./docker/db/initdb:/docker-entrypoint-initdb.d
+      # - ./tmp/db:/var/lib/postgresql/data
   web:
     build:
       context: .

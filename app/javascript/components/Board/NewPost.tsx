@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import NewPostForm from './NewPostForm';
+
 import Spinner from '../shared/Spinner';
 import {
   MutedText,
@@ -27,6 +28,7 @@ interface State {
 
   title: string;
   description: string;
+  images: string[];
 }
 
 class NewPost extends React.Component<Props, State> {
@@ -41,11 +43,13 @@ class NewPost extends React.Component<Props, State> {
 
       title: '',
       description: '',
+      images: undefined,
     };
 
     this.toggleForm = this.toggleForm.bind(this);
     this.onTitleChange = this.onTitleChange.bind(this);
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
+    this.handleAttachment = this.handleAttachment.bind(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
@@ -71,6 +75,12 @@ class NewPost extends React.Component<Props, State> {
     });
   }
 
+  handleAttachment(signedIds) {
+    this.setState({ images: [signedIds[0]]})
+    // const body = JSON.stringify({ post: { title: ..., image: signedIds }})
+    // fetch('/posts.json', { method: 'POST', body })
+  };
+
   async submitForm(e: React.FormEvent) {
     e.preventDefault();
 
@@ -82,7 +92,7 @@ class NewPost extends React.Component<Props, State> {
 
     const boardId = this.props.board.id;
     const { authenticityToken } = this.props;
-    const { title, description } = this.state;
+    const { title, description, images } = this.state;
 
     if (title === '') {
       this.setState({
@@ -104,6 +114,7 @@ class NewPost extends React.Component<Props, State> {
           post: {
             title,
             description,
+            images,
             board_id: boardId,
           },
         }),
@@ -171,6 +182,7 @@ class NewPost extends React.Component<Props, State> {
               handleTitleChange={this.onTitleChange}
               handleDescriptionChange={this.onDescriptionChange}
               handleSubmit={this.submitForm}
+              handleAttachment={this.handleAttachment}
             />
           :
             null

@@ -1,3 +1,5 @@
+import I18n from 'i18n-js';
+
 const friendlyDate = date => {
   var now = new Date();
   var timeStamp = fromRailsStringToJavascriptDate(date);
@@ -5,16 +7,16 @@ const friendlyDate = date => {
   var secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
   
   if (secondsPast < 60) {
-    return 'just now';
+    return I18n.t('javascript.helpers.friendly_date.just_now');
   } else if (secondsPast < 3600) {
     let minutesPast = parseInt(secondsPast / 60);
-    return minutesPast + ' ' + (minutesPast === 1 ? 'minute' : 'minutes') + ' ago';
+    return minutesPast + ' ' + (minutesPast === 1 ? I18n.t('javascript.helpers.friendly_date.minute') : I18n.t('javascript.helpers.friendly_date.minutes')) + I18n.t('javascript.helpers.friendly_date.ago');
   } else if (secondsPast <= 86400) {
     let hoursPast = parseInt(secondsPast / 3600);
-    return hoursPast + ' ' + (hoursPast === 1 ? 'hour' : 'hours') + ' ago';
+    return hoursPast + ' ' + (hoursPast === 1 ? I18n.t('javascript.helpers.friendly_date.hour') : I18n.t('javascript.helpers.friendly_date.hours')) + I18n.t('javascript.helpers.friendly_date.ago');
   } else {
     let daysPast = parseInt(secondsPast / 86400);
-    return daysPast + ' ' + (daysPast === 1 ? 'day' : 'days') + ' ago';
+    return daysPast + ' ' + (daysPast === 1 ? I18n.t('javascript.helpers.friendly_date.day') : I18n.t('javascript.helpers.friendly_date.days')) + I18n.t('javascript.helpers.friendly_date.ago');
   }
 }
 

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 
 import IPost from '../../interfaces/IPost';
 import IPostStatus from '../../interfaces/IPostStatus';
@@ -86,19 +88,20 @@ class PostP extends React.Component<Props> {
         <div className="postAndCommentsContainer">
           <div className="postContainer">
             <div className="postHeader">
-            <LikeButton
-              postId={post.id}
-              likesCount={likes.items.length}
-              liked={likes.items.find(like => like.email === userEmail) ? 1 : 0}
-              isLoggedIn={isLoggedIn}
-              authenticityToken={authenticityToken}
-            />
+              <LikeButton
+                postId={post.id}
+                likesCount={likes.items.length}
+                liked={likes.items.find(like => like.email === userEmail) ? 1 : 0}
+                isLoggedIn={isLoggedIn}
+                authenticityToken={authenticityToken}
+              />
               <h2>{post.title}</h2>
               {
                 isPowerUser && post ?
                   <a href={`/admin/posts/${post.id}`} data-turbolinks="false">Edit</a> : null
               }
             </div>
+            <div>
             {
               isPowerUser && post ?
                 <div className="postSettings">
@@ -127,6 +130,21 @@ class PostP extends React.Component<Props> {
                   />
                 </div>
             }
+            </div>
+            <div className='postImage'>
+            {
+              (post.urls && post.urls.length > 0) ?
+                  <div>
+                    <img
+                      onClick={(e) => e.preventDefault()}
+                      alt={post.title}
+                      src={post.urls[0]}
+                      width='200'
+                    />
+                  </div>
+                : <div></div>
+            }
+            </div>
             <p className="postDescription">{post.description}</p>
             <MutedText>{friendlyDate(post.createdAt)}</MutedText>
           </div>

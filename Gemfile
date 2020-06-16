@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
@@ -23,6 +23,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 # Authentication
 gem 'devise', git: 'https://github.com/plataformatec/devise', tag: 'v4.7.0'
+gem 'devise-i18n'
 
 # Administration panel
 gem "administrate", git: "https://github.com/thoughtbot/administrate.git", tag: 'v0.12.0'
@@ -39,12 +40,19 @@ gem 'omniauth-oauth2'
 # i18n
 gem "i18n-js"
 
+# for ActiveStorage
+gem 'aws-sdk-s3', require: false
+
+gem 'mini_magick'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   gem 'rspec-rails', '~> 3.8.2'
   gem 'factory_bot_rails', '~> 5.0.2'
+
+  gem 'dotenv-rails'
 end
 
 group :development do

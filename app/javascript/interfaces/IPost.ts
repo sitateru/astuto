@@ -2,6 +2,7 @@ interface IPost {
   id: number;
   title: string;
   description?: string;
+  urls?: string;
   boardId: number;
   postStatusId?: number;
   likesCount: number;

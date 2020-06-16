@@ -2,6 +2,7 @@ interface IPostJSON {
   id: number;
   title: string;
   description?: string;
+  urls?: string;
   board_id: number;
   post_status_id?: number;
   likes_count: number;
