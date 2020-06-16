@@ -1,0 +1,8 @@
+.bundle/*
+.git/*
+log/*
+node_modules/*
+public/packs/*
+public/assets/*
+tmp/*
+vendor/bundle/*
