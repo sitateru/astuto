@@ -54,3 +54,24 @@ Astuto is licensed under the [GNU GPLv3](https://github.com/riggraz/astuto/blob/
 * You should take a look at the [technologies](https://github.com/riggraz/astuto/wiki/Technologies) used to build Astuto.
 * You can run the test suite by typing `rspec` inside the `web` container. Before you can run `rspec`, you need to uncomment the Google Chrome installation lines in `docker/app/Dockerfile` and run `./script/docker-update-and-run.sh`.
 * If you just have some suggestions you can [create an issue](https://github.com/riggraz/astuto/issues), [email us directly](mailto:riccardo.graziosi97@gmail.com) or [text us in our Discord server](https://discord.gg/SrtUMRp).
+
+## Docker開発環境構築
+1. .envに必要な環境変数を設定
+
+2. Dockerイメージをビルドする
+```
+% DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose -f docker-compose.development.yml
+```
+
+3. コンテナを起動する
+```
+% docker-compose -f docker-compose.development.yml up -d
+```
+
+4. RailsがListenするまで待つ
+```
+% docker-compose -f docker-compose.development.yml logs -f web
+```
+
+5. Go a head!
+http://localhost:3000
