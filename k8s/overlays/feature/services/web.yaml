@@ -8,8 +8,7 @@ spec:
     spec:
       containers:
         - name: rails
-          image: astuto_web:production
-          imagePullPolicy: Never
+          image: $AWS_ECR_ACCOUNT_URL/$AWS_ECR_REPOSITORY:$TAG
         - name: nginx
           volumeMounts:
             - name: nginx-default-conf
@@ -20,5 +19,5 @@ spec:
           configMap:
             name: nginx-config
             items:
-              - key: default-http.conf
+              - key: default.conf
                 path: default.conf

@@ -34,18 +34,13 @@ jobs:
           command: |
             if [[ $CIRCLE_BRANCH =~ ^(master|develop)$ ]]; then
               ENVIRONMENT="production"
-              NAMESPACE=$ENVIRONMENT
             elif [[ $CIRCLE_BRANCH =~ ^(feature\/.+)$ ]]; then
-              #ENVIRONMENT="feature"
-              #NAMESPACE="$(echo $CIRCLE_BRANCH | tr A-Z a-z | sed -e 's/[^0-9a-z-]/-/g')"
-              ENVIRONMENT="production"
-              NAMESPACE=$ENVIRONMENT
+              ENVIRONMENT="feature"
             else
               echo "circleci step halt"
               circleci step halt
             fi
-            echo "export ENVIRONMENT=$ENVIRONMENT" >> $BASH_ENV
-            echo "export AWS_ECR_REPOSITORY=$APP/$NAMESPACE/web" >> $BASH_ENV
+            echo "export AWS_ECR_REPOSITORY=$APP/$ENVIRONMENT/web" >> $BASH_ENV
       - aws-ecr/build-and-push-image:
           checkout: false
           create-repo: true
@@ -92,21 +87,17 @@ jobs:
           command: |
             if [[ $CIRCLE_BRANCH =~ ^(master|develop)$ ]]; then
               ENVIRONMENT="production"
-              NAMESPACE=$ENVIRONMENT
               HTTP_HOST="cloud-feedbacks.sitateru.com"
             elif [[ $CIRCLE_BRANCH =~ ^(feature\/.+)$ ]]; then
-              #ENVIRONMENT="feature"
-              #NAMESPACE="$(echo $CIRCLE_BRANCH | tr A-Z a-z | sed -e 's/[^0-9a-z-]/-/g')"
-              #HTTP_HOST="${NAMESPACE}-cloud-feedbacks-api.sitateru.com"
-              ENVIRONMENT="production"
-              NAMESPACE=$ENVIRONMENT
-              HTTP_HOST="cloud-feedbacks.sitateru.com"
+              ENVIRONMENT="feature"
+              HTTP_HOST="feature-cloud-feedbacks.sitateru.com"
             else
               echo "circleci step halt"
               circleci step halt
             fi
+            NAMESPACE="${APP}-${ENVIRONMENT}"
             echo "export ENVIRONMENT=$ENVIRONMENT" >> $BASH_ENV
-            echo "export NAMESPACE=${APP}-${NAMESPACE}" >> $BASH_ENV
+            echo "export NAMESPACE=$NAMESPACE" >> $BASH_ENV
             echo "export HTTP_HOST=$HTTP_HOST" >> $BASH_ENV
       - attach_workspace:
           at: /tmp
@@ -118,10 +109,8 @@ jobs:
               -e 's/$AWS_ACCOUNT_ID/'"$AWS_ACCOUNT_ID"'/g' \
               -e 's/$AWS_ECR_ACCOUNT_URL/'"$AWS_ECR_ACCOUNT_URL"'/g' \
               -e 's|$AWS_ECR_REPOSITORY|'"$AWS_ECR_REPOSITORY"'|g' \
-              -e 's/$NAMESPACE/'"$NAMESPACE"'/g' \
               -e 's/$HTTP_HOST/'"$HTTP_HOST"'/g' \
-              -e 's/$APP/'"$APP"'/g' \
-              -e 's/$ENVIRONMENT/'"$ENVIRONMENT"'/g' \
+              -e 's/$NAMESPACE/'"$NAMESPACE"'/g' \
               -e 's/$TAG/'"$TAG"'/g' \
               {} \;
       - aws-eks/update-kubeconfig-with-authenticator:
