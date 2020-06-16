@@ -60,7 +60,7 @@ Astuto is licensed under the [GNU GPLv3](https://github.com/riggraz/astuto/blob/
 
 2. Dockerイメージをビルドする
 ```
-% DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose -f docker-compose.development.yml
+% DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose -f docker-compose.development.yml build
 ```
 
 3. コンテナを起動する

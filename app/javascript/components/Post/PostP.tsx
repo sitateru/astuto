@@ -133,7 +133,7 @@ class PostP extends React.Component<Props> {
             </div>
             <div className='postImage'>
             {
-              post.urls ?
+              (post.urls && post.urls.length > 0) ?
                   <div>
                     <img
                       onClick={(e) => e.preventDefault()}

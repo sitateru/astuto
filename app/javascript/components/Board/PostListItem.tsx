@@ -59,7 +59,7 @@ class PostListItem extends React.Component<Props, State> {
         </div>
         <div className="postImage">
         {
-          this.props.urls && (
+          (this.props.urls && this.props.urls.length > 0) && (
             <div>
               <img
                 onClick={(e) => this.setState({ isOpen: true })}

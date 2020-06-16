@@ -34,12 +34,12 @@ export const DangerText = ({ children }: Props) => (
 );
 
 export const DescriptionText = ({ children, limit = 90}: DescriptionTextProps) => (
-  <span className="descriptionText">
+  <div className="descriptionText">
     {
       children && children.length > limit ?
         children.slice(0, limit-1) + '...'
       :
         children || ''
     }
-  </span>
+  </div>
 );

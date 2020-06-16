@@ -76,7 +76,6 @@ class NewPost extends React.Component<Props, State> {
   }
 
   handleAttachment(signedIds) {
-    console.log('handleAttachment', signedIds)
     this.setState({ images: [signedIds[0]]})
     // const body = JSON.stringify({ post: { title: ..., image: signedIds }})
     // fetch('/posts.json', { method: 'POST', body })
