@@ -9,6 +9,8 @@ import { ReplyFormState } from '../../reducers/replyFormReducer';
 
 import friendlyDate from '../../helpers/friendlyDate';
 
+import I18n from 'i18n-js';
+
 interface Props {
   id: number;
   body: string;
@@ -50,12 +52,12 @@ const Comment = ({
     <div className="commentHeader">
       <Gravatar email={userEmail} size={24} className="gravatar" />
       <span className="commentAuthor">{userFullName}</span>
-      { isPostUpdate ? <span className="postUpdateBadge">Post update</span> : null }
+      { isPostUpdate ? <span className="postUpdateBadge">{I18n.t('javascript.components.comments.comment.post_update')}</span> : null }
     </div>
     <p className="commentBody">{body}</p>
     <div className="commentFooter">
       <a className="commentReplyButton commentLink" onClick={handleToggleCommentReply}>
-        { replyForm.isOpen ? 'Cancel' : 'Reply' }
+        { replyForm.isOpen ? I18n.t('javascript.components.comments.comment.cancel') : I18n.t('javascript.components.comments.comment.reply') }
       </a>
       {
         isPowerUser ?
@@ -65,16 +67,16 @@ const Comment = ({
               onClick={() => handleToggleIsCommentUpdate(id, isPostUpdate)}
               className="commentLink"
             >
-              { 'Post update: ' + (isPostUpdate ? 'yes' : 'no') }
+              { I18n.t('javascript.components.comments.comment.post_update') + ': ' + (isPostUpdate ? I18n.t('javascript.components.comments.comment.yes') : I18n.t('javascript.components.comments.comment.no')) }
             </a>
             <Separator />
-            <a href={`/admin/comments/${id}/edit`} data-turbolinks="false">Edit</a>
+            <a href={`/admin/comments/${id}/edit`} data-turbolinks="false">{ I18n.t('javascript.components.comments.comment.edit') }</a>
             <Separator />
             <a
               href={`/admin/comments/${id}`}
               data-method="delete"
-              data-confirm="Are you sure?"
-              data-turbolinks="false">Delete</a>
+              data-confirm= "{I18n.t('javascript.components.comments.comment.are_you_sure')}"
+              data-turbolinks="false"> {I18n.t('javascript.components.comments.comment.delete')} </a>
 
           </React.Fragment>
         :
