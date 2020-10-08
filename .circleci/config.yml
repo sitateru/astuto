@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.9.1
-  aws-eks: circleci/aws-eks@0.2.7
+  aws-eks: circleci/aws-eks@1.0.0
   kubernetes: circleci/kubernetes@0.11.0
 executors:
   machine-with-docker_layer_caching:
@@ -128,6 +128,7 @@ jobs:
           aws-region: $AWS_REGION
           cluster-name: sitateru
           install-kubectl: true
+          authenticator-release-tag: v0.5.1
       - run:
           name: Create a namespace
           command: |
