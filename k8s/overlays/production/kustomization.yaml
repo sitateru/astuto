@@ -12,4 +12,3 @@ patchesStrategicMerge:
   - services/web.yaml
 resources:
   - secrets/secret.yaml
-  - ingress.yaml
